@@ -2,3 +2,29 @@ mat-form-field,
 textarea {
   width: 100%;
 }
+
+mat-card {
+  background-color: #333;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+.pick-img-btn {
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+input[type="file"] {
+  visibility: hidden;
+}
+
+.image-preview {
+  height: 5rem;
+  margin: 1rem 0;
+}
+
+.image-preview img {
+  height: 100%;
+}
