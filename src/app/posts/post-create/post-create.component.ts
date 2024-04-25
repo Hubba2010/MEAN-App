@@ -12,6 +12,7 @@ import {
   ParamMap
 } from '@angular/router';
 import {Post} from '../post.model';
+import {mimeType} from './mime-type.validator';
 
 @Component({
   selector: "app-post-create",
@@ -35,7 +36,7 @@ export class PostCreateComponent implements OnInit {
       title: new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]
       }),
       content: new FormControl(null, {validators: [Validators.required]}),
-      image: new FormControl(null, {validators: [Validators.required]})
+      image: new FormControl(null, {validators: [Validators.required], asyncValidators: [mimeType]})
     });
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -45,12 +46,19 @@ export class PostCreateComponent implements OnInit {
         this.isLoading = true
         if (this.postId) {
           this.postsService.getPost(this.postId).subscribe(post => {
-            this.post = {id: post._id, title: post.title, content: post.content};
+            this.post = {
+              id: post._id,
+              title: post.title,
+              content: post.content,
+              imagePath: post.imagePath
+            };
             this.form.setValue(
               {
                 'title': this.post.title,
-                'content': this.post.content
+                'content': this.post.content,
+                'image': this.post.imagePath
               });
+            this.imagePreview = post.imagePath;
             this.isLoading = false;
           });
         } else {
@@ -85,9 +93,9 @@ export class PostCreateComponent implements OnInit {
     this.isLoading = true;
 
     if (this.mode === 'create' || !this.postId) {
-      this.postsService.addPost(this.form.value.title, this.form.value.content);
+      this.postsService.addPost(this.form.value.title, this.form.value.content, this.form.value.image);
     } else {
-      this.postsService.updatePost(this.postId, this.form.value.title, this.form.value.content)
+      this.postsService.updatePost(this.postId, this.form.value.title, this.form.value.content, this.form.value.image);
     }
 
     this.form.reset();
