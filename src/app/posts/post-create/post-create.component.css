@@ -3,12 +3,12 @@ textarea {
   width: 100%;
 }
 
-mat-card {
-  background-color: #333;
-}
-
 mat-spinner {
   margin: auto;
+}
+
+mat-card {
+  background-color: #333;
 }
 
 .pick-img-btn {
