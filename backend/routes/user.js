@@ -51,7 +51,7 @@ router.post('/login', (req,res,next) => {
                 'this_should_be_a_long_secret         ',
                 {expiresIn: '1h'}
             );
-            res.status(200).json({token})
+            res.status(200).json({token, expiresIn: 3600})
         })
         .catch(err => {
             return res.status(401).json({
